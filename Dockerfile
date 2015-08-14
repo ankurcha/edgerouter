@@ -6,7 +6,7 @@ RUN \
   apt-get install -y cron haproxy=1.5.8-3 && \
   sed -i 's/^ENABLED=.*/ENABLED=1/' /etc/default/haproxy && \
   rm -rf /var/lib/apt/lists/* \
-  mkdir -p /etc/cron.d
+  mkdir /etc/cron.d
 
 # Install Edgerouter deps
 RUN pip install requests==2.7.0
