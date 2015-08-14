@@ -3,12 +3,12 @@ FROM ubuntu:latest
 # Install Haproxy.
 RUN \
   apt-get update && \
-  apt-get install -y python haproxy && \
+  apt-get install -y python python-setuptools haproxy && \
   sed -i 's/^ENABLED=.*/ENABLED=1/' /etc/default/haproxy && \
   rm -rf /var/lib/apt/lists/*
 
 # Install Edgerouter deps
-RUN pip install requests==2.7.0
+RUN easy_install requests==2.7.0
 
 # Add files.
 ADD edgerouter.py /usr/bin/edgerouter.py
