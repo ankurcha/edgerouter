@@ -3,7 +3,7 @@ FROM ubuntu:latest
 # Install Haproxy.
 RUN \
   apt-get update && \
-  apt-get install -y python haproxy=1.5.8-3 && \
+  apt-get install -y python haproxy && \
   sed -i 's/^ENABLED=.*/ENABLED=1/' /etc/default/haproxy && \
   rm -rf /var/lib/apt/lists/*
 
