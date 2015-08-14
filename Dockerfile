@@ -15,6 +15,17 @@ ADD edgerouter.py /usr/bin/edgerouter.py
 ADD haproxy.cfg /etc/haproxy/haproxy.cfg
 ADD start.bash /haproxy-start
 
+# configure edgerouter.py into a cron job that runs every minute
+# Add crontab file in the cron directory
+RUN echo '* * * * * root /usr/bin/edgerouter.py -m $(cat /etc/marathon.hosts)' >> /etc/cron.d/edgerouter-cron
+RUN echo '# Dont remove the empty line at the end of this file. It is required to run the cron job' >> /etc/cron.d/edgerouter-cron
+
+# Give execution rights on the cron job
+RUN chmod 0644 /etc/cron.d/edgerouter-cron
+ 
+# Create the log file to be able to run tail
+RUN touch /var/log/cron.log
+
 # Define mountable directories.
 VOLUME ["/haproxy-override"]
 
@@ -22,7 +33,7 @@ VOLUME ["/haproxy-override"]
 WORKDIR /etc/haproxy
 
 # Define default command.
-CMD ["bash", "/haproxy-start"]
+CMD ["bash", "cron && /haproxy-start"]
 
 # Expose ports.
 EXPOSE 80
