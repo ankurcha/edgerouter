@@ -33,7 +33,7 @@ VOLUME ["/haproxy-override"]
 WORKDIR /etc/haproxy
 
 # Define default command.
-CMD ["bash", "echo ${MARATHON_HOSTS} > /etc/marathon.hosts && cron && /haproxy-start"]
+CMD "echo ${MARATHON_HOSTS} > /etc/marathon.hosts && cron && /haproxy-start"
 
 # Expose ports.
 EXPOSE 80
